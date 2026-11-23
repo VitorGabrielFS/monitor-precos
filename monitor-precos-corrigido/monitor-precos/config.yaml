@@ -1,0 +1,49 @@
+# ===== Metas e orcamento =====
+orcamento_mensal_max: 500        # soma das parcelas dos DOIS produtos. Nunca recomendado acima disso.
+parcelas_max: 12
+frete_estimado_se_desconhecido: 40   # usado so para calcular o orcamento com seguranca
+validade_ofertas_horas: 6        # oferta nao vista nesse prazo some do ranking
+renotificar_queda_minima_pct: 2  # so avisa de novo se o preco cair pelo menos isso
+max_alertas_por_produto: 2      # envia somente as melhores ofertas por produto
+preco_suspeito_ratio: 0.25     # sinaliza anomalias extremas (<25% da mediana, com 5+ ofertas comparaveis)
+respeitar_robots_txt: true
+top_k_combinacoes: 15
+lojas_confiaveis: [Mercado Livre, Amazon, KaBuM, Magazine Luiza, Casas Bahia, Ponto, Carrefour, Fast Shop, Americanas, Shopee, Pichau, TerabyteShop, Havan, Miranda, iByte, Nagem]
+
+produtos:
+  ps5:
+    nome: PS5
+    meta: 4350                   # alerta quando preco total < meta
+    consultas:
+      - playstation 5 slim digital
+      - playstation 5 slim leitor
+      - playstation 5 pro
+      - console ps5 bundle
+  gta6:
+    nome: GTA 6
+    meta: 449                    # preco oficial Standard e R$ 449,90: so alerta com desconto
+    data_lancamento: "2026-11-19"
+    consultas:
+      - gta 6 ps5
+      - grand theft auto vi ps5
+
+# ===== Lojas =====
+# tipo ml  = API oficial do Mercado Livre (confiavel)
+# tipo generico = leitura de dados publicos da pagina de busca (best effort; pode ser bloqueada)
+lojas:
+  - {nome: Mercado Livre, tipo: ml, ativo: true}
+  - {nome: Amazon,          tipo: generico, ativo: true, url: "https://www.amazon.com.br/s?k={q}", sep: "+"}
+  - {nome: KaBuM,           tipo: generico, ativo: true, url: "https://www.kabum.com.br/busca/{q}", sep: "-"}
+  - {nome: Magazine Luiza,  tipo: generico, ativo: true, url: "https://www.magazineluiza.com.br/busca/{q}/", sep: "+"}
+  - {nome: Casas Bahia,     tipo: generico, ativo: true, url: "https://www.casasbahia.com.br/{q}/b", sep: "-"}
+  - {nome: Ponto,           tipo: generico, ativo: true, url: "https://www.pontofrio.com.br/{q}/b", sep: "-"}
+  - {nome: Carrefour,       tipo: generico, ativo: true, url: "https://www.carrefour.com.br/busca/{q}", sep: "%20"}
+  - {nome: Fast Shop,       tipo: generico, ativo: true, url: "https://www.fastshop.com.br/web/s/{q}", sep: "%20"}
+  - {nome: Americanas,      tipo: generico, ativo: true, url: "https://www.americanas.com.br/busca/{q}", sep: "-"}
+  - {nome: Shopee,          tipo: generico, ativo: true, url: "https://shopee.com.br/search?keyword={q}", sep: "%20"}
+  - {nome: Pichau,          tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.pichau.com.br/search?q={q}", sep: "+"}
+  - {nome: TerabyteShop,    tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.terabyteshop.com.br/busca?str={q}", sep: "%20"}
+  - {nome: Havan,           tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.havan.com.br/catalogsearch/result/?q={q}", sep: "+"}
+  - {nome: Miranda,         tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.miranda.com.br/busca?q={q}", sep: "+"}
+  - {nome: iByte,           tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.ibyte.com.br/busca?q={q}", sep: "+"}
+  - {nome: Nagem,           tipo: generico, ativo: true, assume_first_party_if_missing: true, assume_new_if_missing: true, url: "https://www.nagem.com.br/navegacao?busca={q}", sep: "+"}
